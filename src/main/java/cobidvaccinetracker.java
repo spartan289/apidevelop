@@ -2,21 +2,19 @@ import com.google.gson.*;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.util.Map;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+
 public class cobidvaccinetracker {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     String date = "06-07-2021";
     String pincode = sc.nextLine();
@@ -35,7 +33,7 @@ public class cobidvaccinetracker {
         JsonElement je = jp.parse(response.getBody().toString());
         String prettyJsonString = gson.toJson(je);
         System.out.println(prettyJsonString);
-        String readLine = null;
+        String readLine;
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(response.getRawBody()));
         StringBuilder responses = new StringBuilder();
@@ -49,8 +47,8 @@ public class cobidvaccinetracker {
             JSONObject jsonObj = (JSONObject) object;
             Long pincodel = (Long) jsonObj.get("pincode");
             String name = (String) jsonObj.get("name");
-            String address = (String) jsonObj.get("address") + ", " + (String) jsonObj.get("district_name") + ", " +
-                    (String) jsonObj.get("state_name") + " " + pincodel;
+            String address = jsonObj.get("address") + ", " + jsonObj.get("district_name") + ", " +
+                    jsonObj.get("state_name") + " " + pincodel;
             String fee_type = (String) jsonObj.get("fee_type");
             System.out.println(pincodel);
             System.out.println(name);
